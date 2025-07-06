@@ -27,6 +27,7 @@ public class RiverProblem extends AbstractProblem {
 
     @Override
     public void evaluate(Solution solution) {
+        // === LẤY GIÁ TRỊ TỪ BIẾN QUYẾT ĐỊNH CỦA SOLUTION ===
         int choiceA = BinaryIntegerVariable.getInt(solution.getVariable(0));
         int choiceB = BinaryIntegerVariable.getInt(solution.getVariable(1));
         int choiceC = BinaryIntegerVariable.getInt(solution.getVariable(2));
@@ -57,9 +58,8 @@ public class RiverProblem extends AbstractProblem {
         double payoffC = waterTakenByC * 1.6;                    
         double totalEconomicBenefit = payoffA + payoffB + payoffC; 
 
-        // Gán giá trị cho 2 mục tiêu (đặt dấu âm vì framework tối thiểu hóa)
-        solution.setObjectiveValue(0, riverHealth);        // Tối đa hóa sức khỏe sông
-        solution.setObjectiveValue(1, totalEconomicBenefit); // Tối đa hóa lợi ích kinh tế
+        solution.setObjectiveValue(0, riverHealth);        
+        solution.setObjectiveValue(1, totalEconomicBenefit);
     }
 
     @Override
