@@ -1,6 +1,7 @@
 package org.example;
 
 import org.moeaframework.algorithm.NSGAII;
+import org.moeaframework.analysis.plot.XYPlotBuilder;
 import org.moeaframework.problem.Problem;
 
 public class SolveRiverProblem {
@@ -17,5 +18,9 @@ public class SolveRiverProblem {
 
         // Hiển thị kết quả Pareto front
         algorithm.getResult().display();
+
+        new XYPlotBuilder()
+		    .scatter("NSGA-II", algorithm.getResult())
+		    .show();
     }
 }
