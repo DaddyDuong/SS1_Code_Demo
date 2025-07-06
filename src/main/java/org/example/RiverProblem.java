@@ -1,6 +1,7 @@
 package org.example;
 
 import org.moeaframework.core.Solution;
+import org.moeaframework.core.objective.Maximize;
 import org.moeaframework.core.variable.BinaryIntegerVariable;
 import org.moeaframework.problem.AbstractProblem;
 
@@ -57,8 +58,8 @@ public class RiverProblem extends AbstractProblem {
         double totalEconomicBenefit = payoffA + payoffB + payoffC; 
 
         // Gán giá trị cho 2 mục tiêu (đặt dấu âm vì framework tối thiểu hóa)
-        solution.setObjectiveValue(0, -riverHealth);        // Tối đa hóa sức khỏe sông
-        solution.setObjectiveValue(1, -totalEconomicBenefit); // Tối đa hóa lợi ích kinh tế
+        solution.setObjectiveValue(0, riverHealth);        // Tối đa hóa sức khỏe sông
+        solution.setObjectiveValue(1, totalEconomicBenefit); // Tối đa hóa lợi ích kinh tế
     }
 
     @Override
@@ -68,7 +69,10 @@ public class RiverProblem extends AbstractProblem {
         solution.setVariable(0, new BinaryIntegerVariable(0, 3)); // Quốc gia A
         solution.setVariable(1, new BinaryIntegerVariable(0, 3)); // Quốc gia B
         solution.setVariable(2, new BinaryIntegerVariable(0, 3)); // Quốc gia C
-        
+
+        solution.setObjective(0, new Maximize());
+        solution.setObjective(1, new Maximize());
+
         return solution;
     }
 }
