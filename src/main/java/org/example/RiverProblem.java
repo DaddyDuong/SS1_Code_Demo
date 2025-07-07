@@ -8,7 +8,7 @@ import org.moeaframework.problem.AbstractProblem;
 /**
  * Bài toán phân bổ nước sông 2 mục tiêu:
  * - Mục tiêu 1: Tối đa hóa sức khỏe sông (nước còn lại)
- * - Mục tiêu 2: Tối đa hóa tổng lợi ích kinh tế
+ * - Mục tiêu 2: Tối đa hóa tổng lợi ích kinh tế có xét đến công bằng
  */
 public class RiverProblem extends AbstractProblem {
 
@@ -50,13 +50,17 @@ public class RiverProblem extends AbstractProblem {
         // Mục tiêu 1: Sức khỏe sông - Tính bằng lượng nước còn lại sau khi các quốc gia khai thác
         double riverHealth = waterAvailableForC - waterTakenByC;  
         
-        // Mục tiêu 2: Lợi ích kinh tế 
+        // Mục tiêu 2: Lợi ích kinh tế có xét đến công bằng
         // Mỗi quốc gia có trình độ khai thác kinh tế từ nguồn nước khác nhau
         // Do đó, lợi ích kinh tế sẽ được tính theo hệ số khác nhau
         double payoffA = waterTakenByA * 2.0;
         double payoffB = waterTakenByB * 1.2;
-        double payoffC = waterTakenByC * 1.6;                    
-        double totalEconomicBenefit = payoffA + payoffB + payoffC; 
+        double payoffC = waterTakenByC * 1.6;                     
+        double maxPayoff = Math.max(payoffA, Math.max(payoffB, payoffC));
+        double minPayoff = Math.min(payoffA, Math.min(payoffB, payoffC));
+        // Tổng lợi ích kinh tế trừ đi mức chênh lệch để khuyến khích công bằng
+        double totalEconomicBenefit = payoffA + payoffB + payoffC 
+                                            - (maxPayoff - minPayoff);
 
         solution.setObjectiveValue(0, riverHealth);        
         solution.setObjectiveValue(1, totalEconomicBenefit);
